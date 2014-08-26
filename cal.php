@@ -21,10 +21,10 @@ class Calendar {
 		$timestamp = time();
 		
 		$this->year = ( $year == null ? date('Y') : $year );
-		$this->month = ( $month == null ? date('m') : $month );
-		$this->day = ( $day == null ? date('d') : $day );
+		$this->month = ( $month == null ? date('n') : $month );
+		$this->day = ( $day == null ? date('j') : $day );
 		
-		$this->today = date('Y-m-d', time());
+		$this->today = date('Y-n-j', time());
 		$this->this_day = $this->year . '-' . $this->month . '-' . $this->day;
 		
 		//Here we generate the first day of the month
@@ -51,11 +51,49 @@ class Calendar {
 	/**
 	 * Get the month and year.
 	 * 
-	 * @return string $title The month and year in MON, YEAR format.
+	 * @return string $title The previous month
 	 */
 	public function get_title() {
 		$title = date('F, Y', $this->first_day);
 		return $title;
+	}
+	
+	/**
+	 * Link to previous month.
+	 * 
+	 * @return string The previous month query string.
+	 */
+	public function prev_url() {
+		$year = $this->year;
+		$month = $this->month;
+		
+		if( $this->month == 1 ) {
+			$month = 12;
+			$year--;
+		} else {
+			$month--;
+		}
+		
+		return '?year=' . $year . '&month=' . $month;
+	}
+	
+	/**
+	 * Link to next month.
+	 * 
+	 * @return string The next month query string.
+	 */
+	public function next_url() {
+		$year = $this->year;
+		$month = $this->month;
+		
+		if( $this->month == 12 ) {
+			$month = 1;
+			$year++;
+		} else {
+			$month++;
+		}
+		
+		return '?year=' . $year . '&month=' . $month;
 	}
 
 	/**
@@ -94,17 +132,17 @@ class Calendar {
 		//count up the days, untill we've done all of them in the month
 		while ( $day_num <= $this->days_in_month ) {
 		
-			$this_day = $this->year . '-' . $this->month . '-' . sprintf("%02s", $day_num);
+			$this_day = $this->year . '-' . $this->month . '-' . $day_num;
 			
 			$indicate = $day_num;
 			
 			if( $this_day == $this->today ) // this cell is today
-				$indicate = "<u>$indicate</u>";
+				$indicate = "<i>$indicate</i>";
 			
 			if( $this_day == $this->this_day ) // this cell is this_day (the day focusing on)
 				$indicate = "<mark>$indicate</mark>";
 			
-			$output .= "<td> $indicate </td>";
+			$output .= '<td><a href="?year=' . $this->year . '&month=' . $this->month . '&day=' . $day_num . '">' . $indicate . '</a></td>';
 			$day_num++;
 			$day_count++;
 

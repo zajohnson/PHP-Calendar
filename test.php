@@ -3,7 +3,7 @@
 require_once "cal.php";
 
 $year = ( $_GET['year'] ? $_GET['year'] : date('Y') );
-$month = ( $_GET['month'] ? $_GET['month'] : date('m') );
+$month = ( $_GET['month'] ? $_GET['month'] : date('n') );
 $day = ( $_GET['day'] ? $_GET['day'] : date('d') );
 
 $cal = new Calendar($year, $month, $day);
@@ -16,23 +16,27 @@ form { display: inline-block; }
 </style>
 
 <div id="wrap">
+<div>
+<a href="<?= $cal->prev_url() ?>">Previous</a> |
+<a href="<?= $cal->next_url() ?>">Next</a>
+</div>
 <form method="get">
 	<select name="day">
-		<option<?= ( $day == 01 ? ' selected' : '' ) ?>>01</option>
-		<option<?= ( $day == 02 ? ' selected' : '' ) ?>>02</option>
-		<option<?= ( $day == 03 ? ' selected' : '' ) ?>>03</option>
-		<option<?= ( $day == 04 ? ' selected' : '' ) ?>>04</option>
+		<option<?= ( $day == 1 ? ' selected' : '' ) ?>>1</option>
+		<option<?= ( $day == 2 ? ' selected' : '' ) ?>>2</option>
+		<option<?= ( $day == 3 ? ' selected' : '' ) ?>>3</option>
+		<option<?= ( $day == 4 ? ' selected' : '' ) ?>>4</option>
 	</select>
 	<select name="month">
-		<option value="01"<?= ( $month === '01' ? ' selected' : '' ) ?>>Jan</option>
-		<option value="02"<?= ( $month === '02' ? ' selected' : '' ) ?>>Feb</option>
-		<option value="03"<?= ( $month === '03' ? ' selected' : '' ) ?>>Mar</option>
-		<option value="04"<?= ( $month === '04' ? ' selected' : '' ) ?>>Apr</option>
-		<option value="05"<?= ( $month === '05' ? ' selected' : '' ) ?>>May</option>
-		<option value="06"<?= ( $month === '06' ? ' selected' : '' ) ?>>Jun</option>
-		<option value="07"<?= ( $month === '07' ? ' selected' : '' ) ?>>Jul</option>
-		<option value="08"<?= ( $month === '08' ? ' selected' : '' ) ?>>Aug</option>
-		<option value="09"<?= ( $month === '09' ? ' selected' : '' ) ?>>Sep</option>
+		<option value="1"<?= ( $month === '1' ? ' selected' : '' ) ?>>Jan</option>
+		<option value="2"<?= ( $month === '2' ? ' selected' : '' ) ?>>Feb</option>
+		<option value="3"<?= ( $month === '3' ? ' selected' : '' ) ?>>Mar</option>
+		<option value="4"<?= ( $month === '4' ? ' selected' : '' ) ?>>Apr</option>
+		<option value="5"<?= ( $month === '5' ? ' selected' : '' ) ?>>May</option>
+		<option value="6"<?= ( $month === '6' ? ' selected' : '' ) ?>>Jun</option>
+		<option value="7"<?= ( $month === '7' ? ' selected' : '' ) ?>>Jul</option>
+		<option value="8"<?= ( $month === '8' ? ' selected' : '' ) ?>>Aug</option>
+		<option value="9"<?= ( $month === '9' ? ' selected' : '' ) ?>>Sep</option>
 		<option value="10"<?= ( $month === '10' ? ' selected' : '' ) ?>>Oct</option>
 		<option value="11"<?= ( $month === '11' ? ' selected' : '' ) ?>>Nov</option>
 		<option value="12"<?= ( $month === '12' ? ' selected' : '' ) ?>>Dec</option>
@@ -45,7 +49,7 @@ form { display: inline-block; }
 	</select>
 	<button>Go</button>
 </form>
-<form><button>&bull;</button></form>
+<form><button>Today</button></form>
 
 <?= $cal->print_calendar(false) ?>
 
